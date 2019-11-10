@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,11 +18,7 @@ class ContactType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
-            ->add('dateOfBirth', DateTimeType::class, array(
-                'widget' => 'choice',
-                'years' => range(date('Y'), date('Y')-100),
-            ))
-            ->add('message', TextareaType::class)
+            ->add('mobileNumber', TelType::class)
             ;
     }
 }
