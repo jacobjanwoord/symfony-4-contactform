@@ -25,14 +25,14 @@
         </div> <!-- navbar items -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto" id="links">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link"href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"href="{{ path('new_person')}}">Contact</a>
+                    <a class="nav-link"href="{{ path('person_list')}}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"href="login.php">Login</a>
+                    <a class="nav-link"href="{{ path('new_person') }}">New</a>
                 </li>
             </ul>
         </div>

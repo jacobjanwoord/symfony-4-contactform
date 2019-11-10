@@ -1,15 +1,30 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Person list{% endblock %}
 
 {% block main %}
 
-    <div>
-        {{ form_start(our_form) }}
-        {{ form_widget(our_form) }}
-
-        <input type="submit" value="Send" />
-
-        {{ form_end(our_form) }}
-    </div>
+    {% if persons %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>mobile number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in persons %}
+                    <tr>
+                        <td>{{ person.name }}</td>
+                        <td>{{ person.email }}</td>
+                        <td>{{ person.mobileNumber }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No persons in the database</p>
+    {% endif %}
 
 {% endblock %}
