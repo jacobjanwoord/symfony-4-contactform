@@ -7,6 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WelcomeController extends AbstractController
 {
+
+    //renders home page
     /**
      * @Route("/", name="welcome")
      */

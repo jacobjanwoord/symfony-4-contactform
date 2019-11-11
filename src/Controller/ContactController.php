@@ -6,23 +6,19 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Person;
 use App\Form\ContactType;
 use Symfony\Component\Form\Extension\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\LengthValidator;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContactController extends AbstractController
 {
 
+    //function to show all persons from the database onto the contact page
     /**
      * @Route("/contact", name="person_list", methods={"GET"})
      */
-
     public function index()
     {
         $persons = $this->getDoctrine()->getRepository(Person::class)->findAll();
@@ -30,34 +26,15 @@ class ContactController extends AbstractController
         return $this->render('contact/contact.html.twig', array('persons' => $persons));
     }
 
-//    /**
-//     * @Route("/contact/save", name="contact-save")
-//     */
-
-//    public function save()
-//    {
-//        $entityManager = $this->getDoctrine()->getManager();
-//
-//        $person = new person();
-//        $person->setName('Jacob Jan');
-//        $person->setEmail('jacobjanwoord@gmail.com');
-//        $person->setMobileNumber('0619995065');
-//
-//        $entityManager->persist($person);
-//
-//        $entityManager->flush();
-//
-//        return new Response('saved the person'.$person->getId());
-//    }
-
+    //function to add a new person into the database
     /**
      * @Route("/contact/new", name="new_person", methods={"GET", "POST"})
      */
-
     public function new(Request $request)
     {
         $person = new Person();
 
+        //form builder
         $form = $this->createFormBuilder($person)
             ->add('name', \Symfony\Component\Form\Extension\Core\Type\TextType::class, array('attr' => array('class' => 'form-control')))
             ->add('email', EmailType::class, array('attr' => array('class' => 'form-control')))
@@ -65,19 +42,21 @@ class ContactController extends AbstractController
             ->add('save', SubmitType::class, array('label' => 'Create', 'attr' => array('class' => 'btn btn-primary mt-3')))
             ->getForm();
 
+
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $person = $form->getData();
+            // adding input to database
+            if($form->isSubmitted() && $form->isValid()) {
+                    $person = $form->getData();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($person);
-            $entityManager->flush();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($person);
+                    $entityManager->flush();
 
-            return $this->redirectToRoute('person_list');
-        }
-
-        return $this->render('contact/new.html.twig', array('our_form' => $form->createView()));
+                    return $this->redirectToRoute('person_list');
+            }else {
+                return $this->render('contact/new.html.twig', array('our_form' => $form->createView()));
+            }
     }
+
 }
